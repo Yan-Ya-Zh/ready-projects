@@ -5,36 +5,82 @@ const time = document.querySelector('.time'),
   focus = document.querySelector('.focus');
 
 // Options
-const showAmPm = true;
+//const showAmPm = true;
 
 // Show Time
-function showTime() {
+const showTime = () => {
   let today = new Date(),
     hour = today.getHours(),
     min = today.getMinutes(),
-    sec = today.getSeconds();
+    sec = today.getSeconds(),
+    day = today.getDay(),
+    date = today.getDate(),
+    month = today.getMonth();
 
-  // Set AM or PM
-  const amPm = hour >= 12 ? 'PM' : 'AM';
+  switch (day) {
+    case 0: day = 'Воскресенье';
+    break;
+    case 1: day = 'Понедельник';
+    break;
+    case 2: day = 'Вторник';
+    break;
+    case 3: day = 'Среда';
+    break;
+    case 4: day = 'Четверг';
+    break;
+    case 5: day = 'Пятница';
+    break;
+    case 6: day = 'Суббота';
+    break;
+  }
 
-  // 12hr Format
-  hour = hour % 12 || 12;
+  switch (month) {
+    case 0: month = 'января';
+    break;
+    case 1: month = 'февраля';
+    break;
+    case 2: month = 'марта';
+    break;
+    case 3: month = 'апреля';
+    break;
+    case 4: month = 'мая';
+    break;
+    case 5: month = 'июня';
+    break;
+    case 6: month = 'июля';
+    break;
+    case 7: month = 'августа';
+    break;
+    case 8: month = 'сентября';
+    break;
+    case 9: month = 'октября';
+    break;
+    case 10: month = 'ноября';
+    break;
+    case 11: month = 'декабря';
+    break;
+  }
+
+                                                                                                    // Set AM or PM
+                                                                                                    //const amPm = hour >= 12 ? 'PM' : 'AM';
+
+                                                                                                    // 12hr Format
+                                                                                                    // hour = hour % 12 || 12;
 
   // Output Time
   time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(
-    sec
-  )} ${showAmPm ? amPm : ''}`;
+    sec)}<br>${day}, ${date} ${month}`;
 
   setTimeout(showTime, 1000);
 }
 
 // Add Zeros
-function addZero(n) {
+const addZero = (n) => {
   return (parseInt(n, 10) < 10 ? '0' : '') + n;
 }
 
 // Set Background and Greeting
-function setBgGreet() {
+const setBgGreet = () => {
   let today = new Date(),
     hour = today.getHours();
 
@@ -59,12 +105,14 @@ function setBgGreet() {
 
 // Get Name
 function getName() {
+
   if (localStorage.getItem('name') === null) {
     name.textContent = '[Enter Name]';
   } else {
     name.textContent = localStorage.getItem('name');
   }
 }
+
 
 // Set Name
 function setName(e) {
@@ -73,10 +121,18 @@ function setName(e) {
     if (e.which == 13 || e.keyCode == 13) {
       localStorage.setItem('name', e.target.innerText);
       name.blur();
+      if (name.textContent === '') {
+        name.textContent = '[Enter Name]';
+      }
     }
-  } else {
+  } else  if (name.textContent === '') {
+    name.textContent = '[Enter Name]';
     localStorage.setItem('name', e.target.innerText);
   }
+  else {
+    localStorage.setItem('name', e.target.innerText);
+  }
+
 }
 
 // Get Focus
@@ -95,11 +151,20 @@ function setFocus(e) {
     if (e.which == 13 || e.keyCode == 13) {
       localStorage.setItem('focus', e.target.innerText);
       focus.blur();
+      if (focus.textContent === '') {
+        focus.textContent = '[Enter Focus]';
+      }
     }
-  } else {
+  } else if (focus.textContent === '') {
+    focus.textContent = '[Enter Focus]';
+    localStorage.setItem('focus', e.target.innerText);
+  }
+  else {
     localStorage.setItem('focus', e.target.innerText);
   }
 }
+
+
 
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
