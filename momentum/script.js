@@ -132,7 +132,6 @@ function setName(e) {
   else {
     localStorage.setItem('name', e.target.innerText);
   }
-
 }
 
 // Get Focus
@@ -146,6 +145,7 @@ function getFocus() {
 
 // Set Focus
 function setFocus(e) {
+  focus.onclick
   if (e.type === 'keypress') {
     // Make sure enter is pressed
     if (e.which == 13 || e.keyCode == 13) {
@@ -164,6 +164,9 @@ function setFocus(e) {
   }
 }
 
+const cleartext = (yourtext) => {
+yourtext.textContent = '';
+}
 
 
 name.addEventListener('keypress', setName);
